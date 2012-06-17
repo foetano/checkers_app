@@ -12,6 +12,15 @@
 class User < ActiveRecord::Base
   attr_accessor :password
   attr_accessible :name, :email, :password, :password_confirmation
+  
+  has_many :games1, :foreign_key => "player1",
+                    :class_name => "Game",
+                    :dependent => :destroy
+  has_many :opponents1, :through => :games1, :source => :player2
+  has_many :games2, :foreign_key => "player2",
+                    :class_name => "Game",
+                    :dependent => :destroy
+  has_many :opponents2, :through => :games2, :source => :player1
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 

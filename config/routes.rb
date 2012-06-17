@@ -1,6 +1,7 @@
 SampleApp::Application.routes.draw do
 
   resources :users
+  resources :games
   resources :sessions, :only => [:new, :create, :destroy]
 
   match '/signup',  :to => 'users#new'
@@ -11,6 +12,11 @@ SampleApp::Application.routes.draw do
   match '/about',   :to => 'pages#about'
   match '/help',    :to => 'pages#help'
 
+  match '/newgame',  :to => 'games#new'
+  match '/joingame/:id',  :to => 'games#joingame'
+  match '/newgame_white',  :to => 'games#newwhite'
+  match '/newgame_black',  :to => 'games#newblack'
+  
   root :to => 'pages#home'
   
   

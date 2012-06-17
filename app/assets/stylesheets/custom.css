@@ -1,5 +1,5 @@
 .container {
-  width: 710px;
+  width: 650px;
 }
 
 body {
@@ -194,4 +194,62 @@ ul.users {
 
 .users li {
   list-style: none;
+}
+
+a.side_button {
+  margin-top: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  width: 190px;
+  color: #fff;
+  background: #555;
+  font-size: 150%;
+  font-weight: bold;
+  padding: 20px;
+}
+
+ul.games {
+  margin-top: 1em;
+}
+
+.games li {
+  list-style: none;
+  margin-top: 1em;
+  text-align: center;
+  padding: 20px;
+  font-size: 120%;
+  display: block;
+  color: #fff;
+  background: #555;
+  -moz-border-radius:    10px;
+  -webkit-border-radius: 10px;
+  border-radius:         10px;
+}
+
+a.play_button {
+  margin-top: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 190px;
+  color: #fff;
+  background: #222;
+  font-size: 150%;
+  font-weight: bold;
+  padding: 10px;
+}
+
+td.cell {
+  padding: 0.5em;
+  text-align: center;
+}
+
+td.player {
+  width: 70%;
+  font-size: 2em;
+  padding: 0.5em;
+  vertical-align: middle;
+  background: #C0C0C0;
 }

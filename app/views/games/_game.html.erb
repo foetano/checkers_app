@@ -1,0 +1,19 @@
+<li>
+  <% if game.player1 != nil %>
+  <% user = game.player1 %>
+  <% text = "You will play with black" %>
+  <% else %>
+  <% user = game.player2 %>
+  <% text = "You will play with white" %>
+  <% end %>
+  <% if user != nil %>
+  Your opponent:
+  <%= gravatar_for user, :size => 30 %>
+  <%= user.name %>.
+  <%= text %>
+  <% path = "/joingame/"+game.id.to_s %>
+  <%= link_to "Play", path, :class => "play_button round" %>
+  <% else %>
+  <%= gravatar_image_tag("d@d.r", :gravatar => { :size => 30 }) %>
+  <% end %>
+</li>

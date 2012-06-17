@@ -1,0 +1,9 @@
+<%= form_for @game do |f| %>
+  <div class="field">
+    <%= f.label :move, "Move" %><br />
+    <%= f.text_field :move %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Make move" %>
+  </div>
+<% end %>

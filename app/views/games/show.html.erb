@@ -1,0 +1,43 @@
+<table>
+  <tr>
+      <td class="player round">
+	  <% if @player2.nil? %>
+        Waiting for opponent
+	  <% else %>
+        <%= gravatar_for @player2 %>
+        <%= @player2.name %>
+        <% if @player2 == @current_player %>
+          <%= (You) %>
+        <% end %>
+	  <% end %>
+      </td>
+  </tr>		
+	</table>
+	<table summary="Game Field">
+	  <% for i in 0..7 %> 	
+	  <tr>
+	    <% for j in 0..7 %>
+		<% color = (j+i)%2 == 0 ? "#F7DE84" : "#9C4A08" %>
+	    <td class = "cell", bgcolor = <%= color %> >
+		  <%= image_tag(@gf[i][j]+".png") %>
+	    </td>
+	    <% end %> 	
+	  </tr>
+	  <% end %> 	
+	</table>
+	<table>
+  <tr>
+      <td class="player round">
+	  <% if @player1.nil? %>
+        Waiting for opponent
+	  <% else %>
+        <%= gravatar_for @player1 %>
+        <%= @player1.name %>
+        <% if @player1 == @current_player %>
+          <%= (You) %>
+        <% end %>
+	  <% end %>
+      </td>
+  </tr>	
+</table>
+    <%= render 'makemove' %>
