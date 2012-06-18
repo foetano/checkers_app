@@ -1,0 +1,9 @@
+<%= form_for @game, 
+				:html => {:method => :delete, :confirm => "You sure?" } do |f| %>
+  <div class="field">
+    <%= f.hidden_field :state, :value => @hash %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Quit Game" %>
+  </div>
+<% end %>
