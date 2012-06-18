@@ -123,9 +123,6 @@ GEM
       multi_json (>= 1.0.2)
     will_paginate (3.0.3)
 
-PLATFORMS
-  x86-mingw32
-
 DEPENDENCIES
   annotate (= 2.4.1.beta1)
   coffee-rails (~> 3.2.1)
