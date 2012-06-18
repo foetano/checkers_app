@@ -33,9 +33,14 @@ class GamesController < ApplicationController
   def update
     @game = Game.find(params[:id])
 	@move = params[:game][:move]
+	f1 = @game.gamefield.split
+	@gf = [f1[0..7], f1[8..15], f1[16..23], f1[24..31], f1[32..39], f1[40..47], f1[48..55], f1[56..63]]
 	#flash[:success] = 
 	make_move
-    redirect_to(game_path(@game))
+	respond_to do |format|
+      format.html { redirect_to(game_path(@game)) }
+      format.js
+    end
   end
   
   def joingame
@@ -63,19 +68,26 @@ class GamesController < ApplicationController
     end
 	
     def make_move
-	  unless (@game.player1_id.nil? && @game.player2_id.nil? && move.nil?)
-	    f1 = @game.gamefield.split
-		@gf = [f1[0..7], f1[8..15], f1[16..23], f1[24..31], f1[32..39], f1[40..47], f1[48..55], f1[56..63]].reverse
+	  if (!@game.player1_id.nil? && !@game.player2_id.nil? && 
+	                 ((@game.player1 == current_user && @game.turn == 1) || (@game.player2 == current_user && @game.turn == 2)))
+	    #f1 = @game.gamefield.split
+		#@gf = [f1[0..7], f1[8..15], f1[16..23], f1[24..31], f1[32..39], f1[40..47], f1[48..55], f1[56..63]].reverse
+		@gf = @gf.reverse
 		@to_kill = nil
-		#var = "Not"
+		#@var = "Not"
 	    if legal_move?
-			@gf[@i0][@j0] = '0'
-			@gf[@i1][@j1] = @game.player1_id == current_user.id ? 'w' : 'b'
-			@game.gamefield = @gf.reverse.join(' ');
-			@game.save
-			#@game.update_attributes(:gamefield => @gf.reverse.join(' '))
+		  @gf[@i1][@j1] = @gf[@i0][@j0]
+		  @gf[@i0][@j0] = '0'
+		  if @to_kill != nil
+		    @gf[@to_kill[0]][@to_kill[1]] = '0'
+		  end
+		  @game.gamefield = @gf.reverse.join(' ')
+		  @game.turn = 3 - @game.turn
+		  @game.save
+		  @game.update_attributes(:gamefield => @gf.reverse.join(' '))
 		end
-		#flash[:success] = var
+		@gf = @gf.reverse
+		#flash[:success] = @var
       end
     end
 	
@@ -86,11 +98,34 @@ class GamesController < ApplicationController
 	  @i0 = mv [0][1].to_i - 1
 	  @j1 = mv [1][0].ord - 97
 	  @i1 = mv [1][1].to_i - 1
-	  return false unless (0..8).include?(@i0) && (0..8).include?(@i1) && (0..8).include?(@j0) && (0..8).include?(@j1)
-	  if @game.player1_id == current_user.id
-		return (@gf[@i0][@j0] == 'w' && @gf[@i1][@j1] == '0' && @j1 == @j0 + 1 && (@i1 == @i0 + 1 || @i1 == @i0 - 1))
+	  return false unless (0..8).include?(@i0) && (0..8).include?(@i1) && (0..8).include?(@j0) && (0..8).include?(@j1) && @gf[@i1][@j1] == '0'
+	  if @game.turn == 1
+	    if @gf[@i0][@j0] == 'w'
+		  return true if (@i1 == @i0 + 1 && (@j1 == @j0 + 1 || @j1 == @j0 - 1))
+		  if @i1 == @i0 + 2
+		    if @j1 == @j0 + 2 && @gf[@i0 + 1][@j0 + 1][0] == 'b'
+			  @to_kill = [@i0 + 1, @j0 + 1]
+			  return true
+			elsif @j1 == @j0 - 2 && @gf[@i0 + 1][@j0 - 1][0] == 'b'
+			  @to_kill = [@i0 + 1, @j0 - 1]
+			  return true
+			end
+		  end
+		end
 	  else
-		return (@gf[@i0][@j0] == 'b' && @gf[@i1][@j1] == '0' && @j1 == @j0 - 1 && (@i1 == @i0 + 1 || @i1 == @i0 - 1))
+	    if @gf[@i0][@j0] == 'b'
+		  return true if (@i1 == @i0 - 1 && (@j1 == @j0 + 1 || @j1 == @j0 - 1))
+		  if @i1 == @i0 - 2
+		    if @j1 == @j0 + 2 && @gf[@i0 - 1][@j0 + 1][0] == 'w'
+			  @to_kill = [@i0 - 1, @j0 + 1]
+			  return true
+			elsif @j1 == @j0 - 2 && @gf[@i0 - 1][@j0 - 1][0] == 'w'
+			  @to_kill = [@i0 - 1, @j0 - 1]
+			  return true
+			end
+		  end
+		end
 	  end
+	  return false
 	end
 end
