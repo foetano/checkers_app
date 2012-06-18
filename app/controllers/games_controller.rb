@@ -34,7 +34,7 @@ class GamesController < ApplicationController
 	@turn = @game.turn
 	@hash = Digest::SHA2.hexdigest("#{@game.state}--#{@turn.to_s}")
 	f1 = @game.gamefield.split
-	@gf = [f1[0..7], f1[8..15], f1[16..23], f1[24..31], f1[32..39], f1[40..47], f1[48..55], f1[56..63]]
+	@g_f = [f1[0..7], f1[8..15], f1[16..23], f1[24..31], f1[32..39], f1[40..47], f1[48..55], f1[56..63]]
     @title = "Play"
   end
   
@@ -59,7 +59,7 @@ class GamesController < ApplicationController
 	  @player2 = User.find(@game.player2_id) unless @game.player2_id.nil?
 	  @cur = current_user.id
 	  f1 = @game.gamefield.split
-	  @gf = [f1[0..7], f1[8..15], f1[16..23], f1[24..31], f1[32..39], f1[40..47], f1[48..55], f1[56..63]]
+	  @g_f = @gf = [f1[0..7], f1[8..15], f1[16..23], f1[24..31], f1[32..39], f1[40..47], f1[48..55], f1[56..63]]
       if params[:game][:move] != nil
         @move = params[:game][:move]
 	    #flash[:success] = 

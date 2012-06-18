@@ -4,7 +4,7 @@
 	    <% for j in 0..7 %>
 		<% color = (j+i)%2 == 0 ? "#F7DE84" : "#9C4A08" %>
 	    <td class = "cell", bgcolor = <%= color %> >
-		  <%= image_tag(@gf[i][j]+".png") %>
+		  <%= image_tag(@g_f[i][j]+".png") %>
 	    </td>
 	    <% end %> 	
 	  </tr>
