@@ -1,5 +1,11 @@
 class GamesController < ApplicationController
+  before_filter :authenticate
+  
   def new
+    @title = "New game"
+  end
+  
+  def start
     @title = "New game"
   end
   
@@ -13,7 +19,7 @@ class GamesController < ApplicationController
 	redirect (root_path) if @game.nil?
 	@player1 = User.find(@game.player1_id) unless @game.player1_id.nil?
 	@player2 = User.find(@game.player2_id) unless @game.player2_id.nil?
-	@cur = current_user.id
+	@cur = current_user.id unless current_user.nil?
 	@turn = @game.turn
 	@hash = Digest::SHA2.hexdigest("#{@game.state}--#{@turn.to_s}")
 	f1 = @game.gamefield.split
@@ -73,7 +79,7 @@ class GamesController < ApplicationController
 	  @game.turn = 1
 	  @game.gamefield = "n b n b n b n b b n b n b n b n n b n b n b n b 0 n 0 n 0 n 0 n n 0 n 0 n 0 n 0 w n w n w n w n n w n w n w n w w n w n w n w n"
       @game.save
-      redirect_to(root_path)
+      redirect_to(@game)
     end
 	
     def make_move
@@ -137,4 +143,8 @@ class GamesController < ApplicationController
 	  end
 	  return false
 	end
+	
+    def authenticate
+      deny_access unless signed_in?
+    end
 end

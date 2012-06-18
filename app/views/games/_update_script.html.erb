@@ -1,5 +1,5 @@
 
-<% if @player1.id == @cur && @turn == 2 || @player2.id == @cur && @turn == 1 %>
+<% if @player1 != nil && @player1.id == @cur && @turn == 2 || @player2 != nil && @player2.id == @cur && @turn == 1 %>
   <script type="text/javascript" language="javascript">
 	function runMultiple()
 	{
