@@ -219,8 +219,12 @@ class GamesController < ApplicationController
     end
 	
 	def deny_not_your_game
-      g = Game.find(params[:id])
-	  redir_to_your_game if g.player1 != current_user && g.player2 != current_user
+	  begin
+        g = Game.find(params[:id])
+	    redir_to_your_game if g.player1 != current_user && g.player2 != current_user
+	  rescue ActiveRecord::RecordNotFound
+	    redirect_to root_path
+      end
     end
 	
     def redir_to_your_game
