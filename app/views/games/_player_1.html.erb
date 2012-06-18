@@ -1,0 +1,17 @@
+
+  <tr>
+      <td class="player round">
+	  <% if @player1.nil? %>
+        Waiting for opponent
+	  <% else %>
+        <%= gravatar_for @player1, :size => 30 %>
+        <%= @player1.name %>
+        <% if @player1.id == @cur %>
+          <font color = gray>(You)<font>
+        <% end %>
+		<span id="pl1">
+		  <%= render 'status_1' %>
+		</span>
+	  <% end %>
+      </td>
+  </tr>	

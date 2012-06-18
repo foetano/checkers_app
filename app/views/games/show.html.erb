@@ -1,34 +1,14 @@
-<table>
-  <tr>
-      <td class="player round">
-	  <% if @player2.nil? %>
-        Waiting for opponent
-	  <% else %>
-        <%= gravatar_for @player2 %>
-        <%= @player2.name %>
-        <% if @player2 == @current_player %>
-          <%= (You) %>
-        <% end %>
-	  <% end %>
-      </td>
-  </tr>		
-	</table>
-	<table id="GameField">
+<table id="player_2">
+	  <%= render 'player_2' %>
+</table>
+
+	<table id="GameField" class="gameboard">
 	  <%= render 'gameboard' %>
 	</table>
-	<table>
-  <tr>
-      <td class="player round">
-	  <% if @player1.nil? %>
-        Waiting for opponent
-	  <% else %>
-        <%= gravatar_for @player1 %>
-        <%= @player1.name %>
-        <% if @player1 == @current_player %>
-          <%= (You) %>
-        <% end %>
-	  <% end %>
-      </td>
-  </tr>	
+	
+<table id="player_1">
+	  <%= render 'player_1' %>
 </table>
+
     <%= render 'makemove' %>
+    <%= render 'update_form' %>

@@ -1,0 +1,10 @@
+
+<% if @player1.id == @cur && @turn == 2 || @player2.id == @cur && @turn == 1 %>
+  <script type="text/javascript" language="javascript">
+	function runMultiple()
+	{
+	  document.forms["update_game"].submit();
+	}
+	var timerMulti = window.setInterval("runMultiple();", 10000);
+  </script>
+<% end %>

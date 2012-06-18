@@ -1,0 +1,11 @@
+<%= form_for @game, 
+				:html => {:id => 'update_game' }, 
+				:remote => true do |f| %>
+  <div class="field">
+    <%= f.hidden_field :state, :value => @hash %>
+  </div>
+<% end %>
+
+<span id="update_script">
+  <%= render 'update_script' %>
+</span>

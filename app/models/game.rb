@@ -1,5 +1,5 @@
 class Game < ActiveRecord::Base
-  attr_accessor :move
+  attr_accessor :move, :state
   attr_accessible :player1_id, :player2_id
   
   belongs_to :player1, :class_name => "User"
